@@ -20,6 +20,7 @@ function follow (u, ms) {
     console.log(chalk.green('[' + res.statusCode + '] ') + chalk.gray(opts.method) + ' ' + u + chalk.cyan(' (' + diff + ' ms)'))
     switch (res.statusCode) {
       case 301:
+      case 302:
       case 303:
       case 307:
         hops++
