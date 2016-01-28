@@ -1,0 +1,39 @@
+{
+  "name": "http-traceroute",
+  "version": "0.0.0",
+  "description": "A command line tool for following and showing HTTP redirects for a given URL",
+  "bin": "index.js",
+  "dependencies": {
+    "normalize-url": "^1.4.0",
+    "chalk": "^1.1.1"
+  },
+  "devDependencies": {
+    "standard": "^5.4.1"
+  },
+  "scripts": {
+    "test": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/watson/http-traceroute.git"
+  },
+  "keywords": [
+    "cli",
+    "tool",
+    "redirect",
+    "301",
+    "303",
+    "307",
+    "http",
+    "follow",
+    "trace",
+    "traceroute"
+  ],
+  "author": "Thomas Watson Steen <w@tson.dk> (https://twitter.com/wa7son)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/watson/http-traceroute/issues"
+  },
+  "homepage": "https://github.com/watson/http-traceroute#readme",
+  "preferGlobal": true
+}
