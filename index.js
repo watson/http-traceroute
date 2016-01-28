@@ -22,7 +22,7 @@ function follow (url, ms) {
   var req = protocol.request(opts, function (res) {
     var diff = Date.now() - ms
 
-    console.log(chalk.green('[' + res.statusCode + '] ') + chalk.gray(opts.method) + ' ' + url + chalk.cyan(' (' + diff + ' ms)'))
+    console.log('%s %s %s %s', chalk.green('[' + res.statusCode + ']'), chalk.gray(opts.method), url, chalk.cyan('(' + diff + ' ms)'))
 
     switch (res.statusCode) {
       case 301:
@@ -34,7 +34,7 @@ function follow (url, ms) {
         break
       default:
         diff = Date.now() - start
-        console.log('Trace finished in ' + chalk.cyan(diff + ' ms') + ' using ' + chalk.cyan(hops + ' hops'))
+        console.log('Trace finished in %s using %s', chalk.cyan(diff + ' ms'), chalk.cyan(hops + ' hops'))
         process.exit(0)
     }
   })
