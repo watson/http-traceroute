@@ -8,6 +8,8 @@ var arg = normalizeUrl(process.argv[2])
 var http = require(arg.indexOf('https://') === 0 ? 'https' : 'http')
 
 var start = Date.now()
+var hops = 0
+
 follow(arg, start)
 
 function follow (u, ms) {
@@ -20,11 +22,12 @@ function follow (u, ms) {
       case 301:
       case 303:
       case 307:
+        hops++
         follow(res.headers.location, Date.now())
         break
       default:
         diff = Date.now() - start
-        console.log('Trace finished in ' + chalk.cyan(diff + ' ms'))
+        console.log('Trace finished in ' + chalk.cyan(diff + ' ms') + ' using ' + chalk.cyan(hops + ' hops'))
         process.exit(0)
     }
   })
