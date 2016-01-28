@@ -34,7 +34,7 @@ function follow (url, ms) {
         break
       default:
         diff = Date.now() - start
-        console.log('Trace finished in %s using %s', chalk.cyan(diff + ' ms'), chalk.cyan(hops + ' hops'))
+        console.log('Trace finished in %s using %s', chalk.cyan(diff + ' ms'), chalk.cyan(hops + ' hop' + (hops > 1 ? 's' : '')))
         process.exit(0)
     }
   })
