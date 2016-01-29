@@ -31,7 +31,7 @@ $ http-traceroute nyti.ms/1QETHgV
 [301] HEAD http://nyti.ms/1QDeeSW (213 ms)
 [301] HEAD http://trib.al/HFpblHd (269 ms)
 [303] HEAD http://www.nytimes.com/2016/01/27/nyregion/what-happened-to-jane-mayer-when-she-wrote-about-the-koch-brothers.html?smid=tw-nytimes&smtyp=cur (224 ms)
-[302] HEAD http://www.nytimes.com/glogin?URI=http%3A%2F%2Fwww.nytimes.com%2F2016%2F01%2F27%2Fnyregion%2Fwhat-happened-to-jane-mayer-when-she-wrote-about-the-koch-brothers.html%3Fsmid%3Dtw-nytimes%26smtyp%3Dcur%26_r%3D0 (235 ms)
+[200] HEAD http://www.nytimes.com/glogin?URI=http%3A%2F%2Fwww.nytimes.com%2F2016%2F01%2F27%2Fnyregion%2Fwhat-happened-to-jane-mayer-when-she-wrote-about-the-koch-brothers.html%3Fsmid%3Dtw-nytimes%26smtyp%3Dcur%26_r%3D0 (235 ms)
 Trace finished in 1873 ms using 7 hops
 ```
 
