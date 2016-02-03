@@ -7,6 +7,7 @@ var parseUrl = require('url').parse
 var normalizeUrl = require('normalize-url')
 var chalk = require('chalk')
 
+var prevUrl
 var start = Date.now()
 var hops = 0
 
@@ -14,6 +15,13 @@ follow(process.argv[2], start)
 
 function follow (url, ms) {
   url = normalizeUrl(url)
+
+  if (url === prevUrl) {
+    console.log('Self-referencing redirect detected - aborting...')
+    process.exit(1)
+  }
+  prevUrl = url
+
   var opts = parseUrl(url)
   opts.method = 'HEAD'
 
