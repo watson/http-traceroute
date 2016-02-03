@@ -7,13 +7,13 @@ var parseUrl = require('url').parse
 var normalizeUrl = require('normalize-url')
 var chalk = require('chalk')
 
-var url = normalizeUrl(process.argv[2])
 var start = Date.now()
 var hops = 0
 
-follow(url, start)
+follow(process.argv[2], start)
 
 function follow (url, ms) {
+  url = normalizeUrl(url)
   var opts = parseUrl(url)
   opts.method = 'HEAD'
 
