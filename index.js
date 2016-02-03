@@ -38,5 +38,12 @@ function follow (url, ms) {
         process.exit(0)
     }
   })
+
+  req.on('error', function (err) {
+    console.error('Error:', err.message)
+    console.error('\nCould not connect to:\n%s', url)
+    process.exit(1)
+  })
+
   req.end()
 }
