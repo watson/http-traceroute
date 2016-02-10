@@ -5,7 +5,8 @@
   "bin": "index.js",
   "dependencies": {
     "normalize-url": "^1.4.0",
-    "chalk": "^1.1.1"
+    "chalk": "^1.1.1",
+    "cookie-manager": "^0.0.16"
   },
   "devDependencies": {
     "standard": "^5.4.1"

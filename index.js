@@ -6,12 +6,22 @@ var https = require('https')
 var parseUrl = require('url').parse
 var normalizeUrl = require('normalize-url')
 var chalk = require('chalk')
+var Cookies = require('cookie-manager')
 
 var prevUrl
 var start = Date.now()
 var hops = 0
+var cookies = new Cookies()
 
 follow(process.argv[2], start)
+
+function setCookie (url, headers) {
+  if (headers[ 'set-cookie' ] != null) {
+    headers[ 'set-cookie' ].forEach(function (value) {
+      cookies.store(url, value)
+    })
+  }
+}
 
 function follow (url, ms) {
   url = normalizeUrl(url)
@@ -24,6 +34,9 @@ function follow (url, ms) {
 
   var opts = parseUrl(url)
   opts.method = 'HEAD'
+  opts.headers = {
+    cookie: cookies.prepare(url)
+  }
 
   var protocol = opts.protocol === 'https:' ? https : http
 
@@ -38,6 +51,7 @@ function follow (url, ms) {
       case 303:
       case 307:
         hops++
+        setCookie(url, res.headers)
         follow(res.headers.location, Date.now())
         break
       default:
