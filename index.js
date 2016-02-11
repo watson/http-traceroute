@@ -16,11 +16,12 @@ var cookies = new Cookies()
 follow(process.argv[2], start)
 
 function setCookie (url, headers) {
-  if (headers['set-cookie']) {
-    headers['set-cookie'].forEach(function (value) {
-      cookies.store(url, value)
-    })
-  }
+  var cookieHeader = headers['set-cookie']
+  if (!cookieHeader) return 0
+  cookieHeader.forEach(function (value) {
+    cookies.store(url, value)
+  })
+  return cookieHeader.length
 }
 
 function follow (url, ms) {
@@ -42,11 +43,13 @@ function follow (url, ms) {
 
   var req = protocol.request(opts, function (res) {
     var diff = Date.now() - ms
+    var newCookies = setCookie(url, res.headers)
 
     console.log(
       chalk.green('[' + res.statusCode + ']'),
       chalk.gray(opts.method),
       url,
+      chalk.gray(newCookies ? '(cookies: ' + newCookies + ') ' : '') +
       chalk.cyan('(' + diff + ' ms)')
     )
 
@@ -56,7 +59,6 @@ function follow (url, ms) {
       case 303:
       case 307:
         hops++
-        setCookie(url, res.headers)
         follow(res.headers.location, Date.now())
         break
       default:
