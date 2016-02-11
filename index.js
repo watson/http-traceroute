@@ -14,7 +14,7 @@ var hops = 0
 follow(process.argv[2], start)
 
 function follow (url, ms) {
-  url = normalizeUrl(url)
+  url = normalizeUrl(url, { stripWWW: false })
 
   if (url === prevUrl) {
     console.log('Self-referencing redirect detected - aborting...')
