@@ -43,7 +43,12 @@ function follow (url, ms) {
   var req = protocol.request(opts, function (res) {
     var diff = Date.now() - ms
 
-    console.log('%s %s %s %s', chalk.green('[' + res.statusCode + ']'), chalk.gray(opts.method), url, chalk.cyan('(' + diff + ' ms)'))
+    console.log(
+      chalk.green('[' + res.statusCode + ']'),
+      chalk.gray(opts.method),
+      url,
+      chalk.cyan('(' + diff + ' ms)')
+    )
 
     switch (res.statusCode) {
       case 301:
