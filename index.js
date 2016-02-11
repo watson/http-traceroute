@@ -16,8 +16,8 @@ var cookies = new Cookies()
 follow(process.argv[2], start)
 
 function setCookie (url, headers) {
-  if (headers[ 'set-cookie' ] != null) {
-    headers[ 'set-cookie' ].forEach(function (value) {
+  if (headers['set-cookie']) {
+    headers['set-cookie'].forEach(function (value) {
       cookies.store(url, value)
     })
   }
@@ -35,7 +35,7 @@ function follow (url, ms) {
   var opts = parseUrl(url)
   opts.method = 'HEAD'
   opts.headers = {
-    cookie: cookies.prepare(url)
+    Cookie: cookies.prepare(url)
   }
 
   var protocol = opts.protocol === 'https:' ? https : http
