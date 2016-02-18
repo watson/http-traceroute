@@ -4,9 +4,10 @@
   "description": "A command line tool for following and showing HTTP redirects for a given URL",
   "bin": "index.js",
   "dependencies": {
-    "normalize-url": "^1.4.0",
     "chalk": "^1.1.1",
-    "cookie-manager": "^0.0.16"
+    "cookie-manager": "^0.0.16",
+    "normalize-url": "^1.4.0",
+    "spdy": "^3.2.0"
   },
   "devDependencies": {
     "standard": "^5.4.1"
