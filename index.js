@@ -12,6 +12,7 @@ var prevUrl
 var start = Date.now()
 var hops = 0
 var cookies = new Cookies()
+var userAgent = 'Mozilla/5.0 AppleWebKit/537.36 Chrome/50.0.2653.0 Safari/537.36'
 
 follow(process.argv[2], start)
 
@@ -36,7 +37,8 @@ function follow (url, ms) {
   var opts = parseUrl(url)
   opts.method = 'HEAD'
   opts.headers = {
-    Cookie: cookies.prepare(url)
+    'Cookie': cookies.prepare(url),
+    'User-Agent': userAgent
   }
 
   var protocol = opts.protocol === 'https:' ? https : http
