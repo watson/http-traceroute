@@ -3,6 +3,7 @@
 
 var http = require('http')
 var https = require('https')
+var spdy = require('spdy')
 var parseUrl = require('url').parse
 var normalizeUrl = require('normalize-url')
 var chalk = require('chalk')
@@ -17,12 +18,26 @@ var userAgent = 'Mozilla/5.0 AppleWebKit/537.36 Chrome/50.0.2653.0 Safari/537.36
 follow(process.argv[2], start)
 
 function setCookie (url, headers) {
-  var cookieHeader = headers['set-cookie']
-  if (!cookieHeader) return 0
-  cookieHeader.forEach(function (value) {
+  if (!headers['set-cookie']) return 0
+  headers['set-cookie'].forEach(function (value) {
     cookies.store(url, value)
   })
-  return cookieHeader.length
+  return headers['set-cookie'].length
+}
+
+function setProtocol (res) {
+  res.protocol = 'HTTP'
+  if (res.socket._spdyState) {
+    var spdyState = res.socket._spdyState.parent
+    var protocol = spdyState.alpnProtocol || spdyState.npnProtocol
+    var parts = protocol.match(/^([^\/\d]+)\/?(\d+)(?:\.(\d+))?/i)
+    if (parts) {
+      res.protocol = parts[1] === 'h' ? 'HTTP' : parts[1].toUpperCase()
+      res.httpVersionMajor = parts[2]
+      res.httpVersionMinor = parts[3] || 0
+      res.httpVersion = res.httpVersionMajor + '.' + res.httpVersionMinor
+    }
+  }
 }
 
 function follow (url, ms) {
@@ -43,12 +58,22 @@ function follow (url, ms) {
 
   var protocol = opts.protocol === 'https:' ? https : http
 
+  if (opts.protocol === 'https:') {
+    opts.agent = spdy.createAgent({
+      host: opts.hostname || opts.host,
+      port: opts.port || 443
+    })
+  }
+
   var req = protocol.request(opts, function (res) {
     var diff = Date.now() - ms
     var newCookies = setCookie(url, res.headers)
 
+    setProtocol(res)
+
     console.log(
       chalk.green('[' + res.statusCode + ']'),
+      chalk.yellow(res.protocol + '/' + res.httpVersionMajor + '.' + res.httpVersionMinor),
       chalk.gray(opts.method),
       url,
       chalk.gray(newCookies ? '(cookies: ' + newCookies + ') ' : '') +
