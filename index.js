@@ -4,6 +4,9 @@
 var http = require('http')
 var https = require('https')
 var spdy = require('spdy')
+var gunzip = require('gunzip-maybe')
+var concat = require('concat-stream')
+var cheerio = require('cheerio')
 var parseUrl = require('url').parse
 var normalizeUrl = require('normalize-url')
 var chalk = require('chalk')
@@ -14,6 +17,7 @@ var start = Date.now()
 var hops = 0
 var cookies = new Cookies()
 var userAgent = 'Mozilla/5.0 AppleWebKit/537.36 Chrome/50.0.2653.0 Safari/537.36'
+var metaRegex = /^ *\d+; *URL=(.*)$/i
 
 follow(process.argv[2], start)
 
@@ -50,7 +54,7 @@ function follow (url, ms) {
   prevUrl = url
 
   var opts = parseUrl(url)
-  opts.method = 'HEAD'
+  opts.method = 'GET'
   opts.headers = {
     'Cookie': cookies.prepare(url),
     'User-Agent': userAgent
@@ -88,10 +92,11 @@ function follow (url, ms) {
         hops++
         follow(res.headers.location, Date.now())
         break
+      case 200:
+        parse(res)
+        break
       default:
-        diff = Date.now() - start
-        console.log('Trace finished in %s using %s', chalk.cyan(diff + ' ms'), chalk.cyan(hops + ' hop' + (hops > 1 ? 's' : '')))
-        process.exit(0)
+        done()
     }
   })
 
@@ -102,4 +107,27 @@ function follow (url, ms) {
   })
 
   req.end()
+}
+
+// Look for something like:
+// <META http-equiv="refresh" content="0;URL=http://bit.ly/berlin-nodejs-meetup">
+function parse (res) {
+  res.pipe(gunzip()).pipe(concat(function (buf) {
+    var $ = cheerio.load(buf)
+    var content = $('meta[http-equiv=refresh]').attr('content')
+    if (content) {
+      var match = content.match(metaRegex)
+      if (match && match[1]) {
+        follow(match[1], Date.now())
+        return
+      }
+    }
+    done()
+  }))
+}
+
+function done () {
+  var diff = Date.now() - start
+  console.log('Trace finished in %s using %s', chalk.cyan(diff + ' ms'), chalk.cyan(hops + ' hop' + (hops > 1 ? 's' : '')))
+  process.exit(0)
 }
