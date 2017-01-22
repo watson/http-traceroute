@@ -1,8 +1,11 @@
 language: node_js
-script:
-- 'npm run lint'
-- 'npm test'
+sudo: false
+notifications:
+  email: false
 node_js:
-- '4'
-- '5'
-- 'latest'
+- stable
+- "6"
+- "4"
+script:
+- npm run lint
+- npm test
