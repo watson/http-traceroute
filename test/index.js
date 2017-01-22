@@ -4,7 +4,7 @@ var Trace = require('..')
 suite('URL Shorteners', function () {
   this.timeout(10000)
 
-  suite('Twitter (t.co)', function () {
+  suite.skip('Twitter (t.co)', function () {
     test('should receive 3xx redirect for "https://t.co/fW61qZgOWm"', function (done) {
       new Trace('https://t.co/fW61qZgOWm')
         .resume().once('end', function () {
