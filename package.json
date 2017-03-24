@@ -10,6 +10,7 @@
     "chalk": "^1.1.3",
     "cookie-manager": "^0.0.16",
     "normalize-url": "^1.9.0",
+    "readable-stream": "^2.2.6",
     "spdy": "^3.4.4"
   },
   "devDependencies": {
