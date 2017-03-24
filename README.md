@@ -10,16 +10,42 @@ URL. Similar to the `traceroute` unix tool.
 
 ## Installation
 
-Install globally:
+Install globally as a CLI:
 
 ```
 npm install http-traceroute -g
 ```
 
-## Usage
+Install as a module:
+
+```
+npm install --save http-traceroute
+```
+
+## CLI Usage
 
 ```
 http-traceroute [url]
+```
+
+## Module Usage
+
+```js
+var TraceRoute = require('http-traceroute')
+```
+
+```js
+var trace = new TraceRoute('https://github.com')
+
+trace.on('readable', function () {
+  var hop = null
+  while (hop = this.read()) {
+    console.log(hop)
+  }
+})
+
+trace.once('error', function () {})
+trace.once('end', function () {})
 ```
 
 ## License
