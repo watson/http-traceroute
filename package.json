@@ -15,11 +15,11 @@
   },
   "devDependencies": {
     "mocha": "~3.2.0",
-    "standard": "^8.6.0"
+    "standard": "^9.0.2"
   },
   "scripts": {
-    "lint": "standard lib && standard --global suite --global test",
-    "test": "mocha --ui tdd"
+    "lint": "standard",
+    "test": "standard && mocha --ui tdd"
   },
   "repository": {
     "type": "git",
