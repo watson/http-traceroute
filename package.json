@@ -14,12 +14,12 @@
     "spdy": "^3.4.4"
   },
   "devDependencies": {
-    "mocha": "~3.2.0",
-    "standard": "^9.0.2"
+    "standard": "^9.0.2",
+    "tape": "^4.6.3"
   },
   "scripts": {
     "lint": "standard",
-    "test": "standard && mocha --ui tdd"
+    "test": "standard && tape 'test/*.js'"
   },
   "repository": {
     "type": "git",
