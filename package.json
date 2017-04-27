@@ -1,6 +1,6 @@
 {
   "name": "http-traceroute",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "main": "lib/trace.js",
   "description": "A command line tool for following and showing HTTP redirects for a given URL",
   "bin": {
@@ -45,7 +45,7 @@
   "homepage": "https://github.com/watson/http-traceroute#readme",
   "preferGlobal": true,
   "coordinates": [
-    55.68109459999999,
-    12.5644213
+    55.68105019999999,
+    12.5644427
   ]
 }
