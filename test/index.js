@@ -63,3 +63,35 @@ test('Workarounds', function (t) {
     })
   })
 })
+
+test('normalization', function (t) {
+  t.test('stripWWW', function (t) {
+    var hops = 0
+    var lastHop = null
+    new Trace('www.example.com')
+      .on('data', function (hop) {
+        hops++
+        lastHop = hop.url
+      })
+      .once('end', function () {
+        t.equal(lastHop, 'http://www.example.com')
+        t.equal(hops, 1)
+        t.end()
+      })
+  })
+
+  t.test('removeTrailingSlash', function (t) {
+    var hops = 0
+    var lastHop = null
+    new Trace('example.com/foo/')
+      .on('data', function (hop) {
+        hops++
+        lastHop = hop.url
+      })
+      .once('end', function () {
+        t.equal(lastHop, 'http://example.com/foo/')
+        t.equal(hops, 1)
+        t.end()
+      })
+  })
+})
