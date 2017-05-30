@@ -80,6 +80,21 @@ test('normalization', function (t) {
       })
   })
 
+  t.test('removeQueryParameters', function (t) {
+    var hops = 0
+    var lastHop = null
+    new Trace('example.com/?foo=bar&utm_source=baz')
+      .on('data', function (hop) {
+        hops++
+        lastHop = hop.url
+      })
+      .once('end', function () {
+        t.equal(lastHop, 'http://example.com/?foo=bar&utm_source=baz')
+        t.equal(hops, 1)
+        t.end()
+      })
+  })
+
   t.test('removeTrailingSlash', function (t) {
     var hops = 0
     var lastHop = null
