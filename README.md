@@ -44,8 +44,8 @@ trace.on('readable', function () {
   }
 })
 
-trace.once('error', function () {})
-trace.once('end', function () {})
+trace.on('error', function () {})
+trace.on('end', function () {})
 ```
 
 ## License
