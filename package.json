@@ -7,18 +7,18 @@
     "http-traceroute": "bin/cli.js"
   },
   "dependencies": {
-    "chalk": "^2.3.0",
+    "chalk": "^3.0.0",
     "cookie-manager": "^0.0.19",
-    "normalize-url": "^1.9.0",
-    "readable-stream": "^2.3.3",
-    "spdy": "^3.4.4"
+    "normalize-url": "^5.0.0",
+    "readable-stream": "^3.6.0"
   },
   "devDependencies": {
-    "standard": "^9.0.2",
-    "tape": "^4.8.0"
+    "standard": "^14.3.3",
+    "tape": "^4.13.2"
   },
   "scripts": {
     "lint": "standard",
+    "fix": "standard --fix",
     "test": "standard && tape 'test/*.js'"
   },
   "repository": {

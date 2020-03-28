@@ -28,6 +28,15 @@ npm install --save http-traceroute
 http-traceroute [url]
 ```
 
+### Example
+
+```console
+$ http-traceroute www.cloudflare.com/website-optimization/http2/
+[301 Moved Permanently] HTTP/1.1 HEAD 104.17.209.9 http://www.cloudflare.com/website-optimization/http2/ (cookies: 1) (48 ms)
+[200 OK] HTTP/2.0 HEAD 104.17.209.9 https://www.cloudflare.com/website-optimization/http2/ (cookies: 1) (111 ms)
+Trace finished in 165 ms using 1 hop
+```
+
 ## Module Usage
 
 ```js
@@ -46,6 +55,39 @@ trace.on('readable', function () {
 
 trace.on('error', function () {})
 trace.on('end', function () {})
+```
+
+A `hop` object has the following properties:
+
+```js
+hop {
+  // IP address of remote host
+  remoteAddress: String,
+  // Currently always 'HTTP'
+  protocol: String,
+  // Major HTTP protocol version
+  protocolVersionMajor: Number,
+  // Minor HTTP protocol version
+  protocolVersionMinor: Number,
+  // HTTP method
+  method: String,
+  // Current hop URL
+  url: String,
+  // HTTP status code
+  statusCode: Number,
+  // HTTP status message
+  statusMessage: String,
+  // Current cookie count
+  cookies: Number,
+  // Number of newly added cookies on this hop
+  newCookies: Number,
+  // Response time in milliseconds
+  time: Number,
+  // Response headers
+  headers: Object,
+  // Current hop number
+  hop: Number,
+}
 ```
 
 ## License

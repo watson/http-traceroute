@@ -15,9 +15,10 @@ var trace = new Trace(process.argv[2])
   })
   .on('data', function (step) {
     console.log(
-      chalk.green('[' + step.statusCode + ']'),
+      chalk.green('[' + step.statusCode + ' ' + step.statusMessage + ']'),
       chalk.yellow(step.protocol + '/' + step.protocolVersionMajor + '.' + step.protocolVersionMinor),
       chalk.gray(step.method),
+      chalk.red(step.remoteAddress),
       step.url,
       chalk.gray(step.newCookies ? '(cookies: ' + step.newCookies + ') ' : '') +
       chalk.cyan('(' + step.time + ' ms)')
